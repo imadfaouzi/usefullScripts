@@ -1,0 +1,21 @@
+version: '3.8'
+
+networks:
+  main-network:
+    name: main-network
+    external: true
+    driver: bridge
+
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    networks:
+      - main-network
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - /home/ubuntu/nginix/data:/data
+      - /home/ubuntu/nginix/letsencrypt:/etc/letsencrypt
