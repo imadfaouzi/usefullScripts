@@ -1,0 +1,21 @@
+version: '3.8'
+
+networks:
+  main-network:
+    name: main-network
+    external: true
+    driver: bridge
+
+services:
+  assafa-fallback:
+    image: 192.168.11.4:5000/assafa-fallback:preprod
+    container_name: assafa-fallback-preprod
+    env_file:
+      - .env.preprod
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../temp_file:/app/temp_files
+    networks:
+      - main-network
+    restart: always

@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  deploy-server:
+    image: python:3.9
+    container_name: deploy-server
+    working_dir: /app
+    volumes:
+      - ./chatbot:/app/chatbot
+      - /var/run/docker.sock:/var/run/docker.sock  # Mount the Docker socket to allow container operations
+    ports:
+      - "6161:6161"  # Expose port to access the API
+    command: >
+      bash -c "pip install Flask && python /app/chatbot/deploy-server.py"
+    environment:
+      - FLASK_APP=/app/chatbot/deploy-server.py
+      - FLASK_ENV=development

@@ -1,0 +1,19 @@
+version: '3.8'
+
+networks:
+  main-network:
+    name: main-network
+    external: false
+    driver: bridge
+
+services:
+  assafa-kpis:
+    image: 192.168.11.4:5000/assafa-kpis:preprod
+    container_name: assafa-kpis
+    env_file:
+      - .env.preprod
+    ports:
+      - "6000:8080"
+    networks:
+      - main-network
+    restart: always

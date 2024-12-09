@@ -1,0 +1,17 @@
+version: '3.9'
+
+networks:
+  main-network:
+    name: main-network
+    external: true
+    driver: bridge
+
+services:
+  bankassafa-back-preprod:
+    image: 192.168.11.4:5000/bankassafa-back:preprod
+    container_name: bankassafa-back-preprod
+    environment:
+      SPRING_PROFILES_ACTIVE: preprod
+    networks:
+      - main-network
+    restart: always
