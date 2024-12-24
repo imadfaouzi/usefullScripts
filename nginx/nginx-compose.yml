@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  web:
+    image: nginx:latest
+    container_name: simpleWebsecure
+    volumes:
+      - ./indexFolder:/usr/share/nginx/html
+    ports:
+      - "2452:80"
+    restart: unless-stopped
