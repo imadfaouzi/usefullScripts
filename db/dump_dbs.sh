@@ -9,7 +9,7 @@ DB_USER="your_db_user"
 DB_PASSWORD="your_db_password"
 
 # Set the base directory for backups
-BASE_DUMP_DIR="/home/predbserver/PROD_DUMP"
+BASE_DUMP_DIR="/home/proddbserver/DUMPS"
 
 # Get the current date in the format DD_MM_YY
 CURRENT_DATE=$(date +"%d_%m_%y")
