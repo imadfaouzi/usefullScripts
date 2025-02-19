@@ -8,11 +8,18 @@ DB_NAME_2="bankassafa_vector"
 DB_USER="your_db_user"
 DB_PASSWORD="your_db_password"
 
-# Get the current date in the format dd-mm-aaaa
-CURRENT_DATE=$(date +"%d-%m-%Y")
+# Set the base directory for backups
+BASE_DUMP_DIR="/home/predbserver/PROD_DUMP"
+
+# Get the current date in the format DD_MM_YY
+CURRENT_DATE=$(date +"%d_%m_%y")
+
+# Create a new directory for today's backup
+DUMP_DIR="${BASE_DUMP_DIR}/backup_${CURRENT_DATE}"
+mkdir -p "${DUMP_DIR}"
 
 # Dump the first database
-DUMP_FILE_1="${DB_NAME_1}-${CURRENT_DATE}.sql"
+DUMP_FILE_1="${DUMP_DIR}/${DB_NAME_1}-${CURRENT_DATE}.sql"
 echo "Dumping database ${DB_NAME_1} to ${DUMP_FILE_1}..."
 PGPASSWORD="${DB_PASSWORD}" pg_dump -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}" -F c -b -v -f "${DUMP_FILE_1}" "${DB_NAME_1}"
 if [ $? -eq 0 ]; then
@@ -23,7 +30,7 @@ else
 fi
 
 # Dump the second database
-DUMP_FILE_2="${DB_NAME_2}-${CURRENT_DATE}.sql"
+DUMP_FILE_2="${DUMP_DIR}/${DB_NAME_2}-${CURRENT_DATE}.sql"
 echo "Dumping database ${DB_NAME_2} to ${DUMP_FILE_2}..."
 PGPASSWORD="${DB_PASSWORD}" pg_dump -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}" -F c -b -v -f "${DUMP_FILE_2}" "${DB_NAME_2}"
 if [ $? -eq 0 ]; then
@@ -33,4 +40,4 @@ else
     exit 1
 fi
 
-echo "All dumps completed successfully."
+echo "All dumps completed successfully and stored in ${DUMP_DIR}."
